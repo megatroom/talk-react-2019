@@ -1,0 +1,357 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>React 2019 by Nardini</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css">
+
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="css/code/atom-one-dark.css">
+
+		<link rel="stylesheet" href="css/main.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section class="introduction" data-background-image="images/hooksbg.jpg">
+					<br><br><br>
+					<h2>React 2019</h2>
+					<p>by Bruno Nardini</p>
+				</section>
+				<section>
+					<h2>React 15.6.2</h2>
+					<p>Switch all packages from <br/> BSD + Patents to <span class="purple">MIT license</span></p>
+				</section>
+				<section>
+					<h2>React v16.0</h2>
+					<p>Fragments, error boundaries, portals, support for custom DOM attributes, improved server-side rendering, and reduced file size.</p>
+				</section>
+				<section>
+					<h2>Error Boundaries</h2>
+					<p>React 16 introduces a new concept of an “error boundary”.</p>
+				</section>
+				<section class="full-code">
+					<pre><code class="javascript" data-trim data-line-numbers="7-13,16-19">
+						class ErrorBoundary extends React.Component {
+						  constructor(props) {
+						    super(props);
+						    this.state = { hasError: false };
+						  }
+
+						  componentDidCatch(error, info) {
+						    // Display fallback UI
+						    this.setState({ hasError: true });
+						    // You can also log the error
+						    // to an error reporting service
+						    logErrorToMyService(error, info);
+						  }
+
+						  render() {
+						    if (this.state.hasError) {
+						      // You can render any custom fallback UI
+						      return <h1>Something went wrong.</h1>;
+						    }
+
+						    return this.props.children;
+						  }
+						}
+					</code></pre>
+				</section>
+				<section>
+					<p>Oh Yeah, Fragments!</p>
+					<pre><code class="javascript" data-trim>
+						render() {
+						  return (
+						    <React.Fragment>
+						      <li key="A">First item</li>,
+						      <li key="B">Second item</li>,
+						      <li key="C">Third item</li>,
+						    </React.Fragment>
+						  );
+						}
+					</code></pre>
+				</section>
+				<section>
+					<p>You can now return an array of elements:</p>
+					<pre><code data-trim>
+						render() {
+						  /* No need to wrap list items in an extra element! */
+						  return [
+						    /* Don't forget the keys :) */
+						    <li key="A">First item</li>,
+						    <li key="B">Second item</li>,
+						    <li key="C">Third item</li>,
+						  ];
+						}
+					</code></pre>
+				</section>
+				<section>
+					<p>And strings:</p>
+					<pre><code class="javascript" data-trim>
+						render() {
+						  return 'Look ma, no spans!';
+						}
+					</code></pre>
+				</section>
+				<section>
+					<h2>Portals</h2>
+					<p>Portals provide a first-class way to render children into a DOM node that exists outside the DOM hierarchy of the parent component.</p>
+					<pre><code class="javascript" data-trim>
+						render() {
+						  return ReactDOM.createPortal(
+						    this.props.children,
+						    domNode,
+						  );
+						}
+					</code></pre>
+				</section>
+				<section>
+					<h2>React v16.3.0</h2>
+					<p>New lifecycles and context API</p>
+				</section>
+				<section>
+					<p>Official Context API</p>
+					<img src="images/context.png" alt="Context API">
+				</section>
+				<section>
+					<pre><code class="javascript" data-trim>
+						/* Redux provider */
+						<Provider store={store}>
+						  <App></App>
+						</Provider>
+
+						/* React context provider */
+						<MyContext.Provider value={state}>
+						  <App></App>
+						</MyContext.Provider>
+					</code></pre>
+					<pre><code class="javascript" data-trim>
+						/* Redux consumer with HOC */
+						export default connect(
+						  mapStateToProps,
+						  mapDispatchToProps
+						)(Counter)
+
+						/* React context consumer */
+						<MyContext.Consumer value={state}>
+						  {function(state) {
+						    return (
+						      <h1>{state.title}</h1>
+						    )
+						  }}
+						</MyContext.Consumer>
+					</code></pre>
+				</section>
+				<section>
+					<h2>React Profiler</h2>
+					<p>React 16.5 adds support for a new DevTools profiler plugin.</p>
+					<img src="images/profile.png" alt="Profile APÌ">
+				</section>
+				<section>
+					<img src="images/profle2.gif" alt="Profile API">
+				</section>
+				<section>
+					<h3>Component Lifecycle Changes</h3>
+					<p>Deprecation warning (will be removed in 17.0):</p>
+					<ul>
+						<li>componentWillMount</li>
+						<li>componentWillReceiveProps</li>
+						<li>componentWillUpdate</li>
+					</ul>
+					<p>New lifecycles:</p>
+					<ul>
+						<li>getDerivedStateFromProps</li>
+						<li>getSnapshotBeforeUpdate</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Create React App 2.0</h2>
+					<p>Babel 7, Sass, and more</p>
+				</section>
+				<section>
+					<ul>
+						<li>Updated to <span class="purple">Babel 7</span>, including support for the <span class="purple">React fragment</span> syntax and many bugfixes.</li>
+						<li>Updated to <span class="purple">Webpack 4</span>, which automatically splits JS bundles more intelligently.</li>
+						<li>We updated to <span class="purple">Jest 23</span>, which includes an interactive mode for reviewing snapshots.</li>
+					</ul>
+				</section>
+				<section>
+					<ul>
+						<li>More styling options: you can use <span class="purple">Sass</span> and <span class="purple">CSS Modules</span> out of the box.</li>
+						<li>Added <span class="purple">PostCSS</span> so you can use <span class="purple">new CSS features in old browsers.</span></li>
+						<li>You can now optionally get a <span class="purple">smaller CSS bundle</span> if you only plan to target <span class="purple">modern browsers.</span></li>
+					</ul>
+				</section>
+				<section>
+					<ul>
+						<li>Service workers are now opt-in and are built using <span class="purple">Google’s Workbox</span>.</li>
+						<li>You can use <span class="purple">Apollo</span>, <span class="purple">Relay Modern</span>, <span class="purple">MDX</span>, and other third-party <span class="purple">Babel Macros transforms</span>.</li>
+						<li>You can now import an <span class="purple">SVG as a React component</span>, and use it in JSX.</li>
+					</ul>
+				</section>
+				<section>
+					<h2>React v16.6.0</h2>
+					<p>lazy, memo and contextType</p>
+				</section>
+				<section>
+					<h2>React.memo</h2>
+					<pre><code class="javascript" data-trim data-noescape>
+						const MyComponent = React.memo(function MyComponent(props) {
+						  /* render using props */
+						});
+					</code></pre>
+				</section>
+				<section>
+					<pre><code data-trim data-noescape>
+						class MyComponent extends React.PureComponent {
+						  render() {
+						    /* render using this.props and this.state */
+						  }
+						});
+					</code></pre>
+					<p>é igual a</p>
+					<pre><code data-trim data-noescape>
+						const MyComponent = React.memo(function MyComponent(props) {
+						  /* render using props */
+						});
+					</code></pre>
+				</section>
+				<section class="shallow-now" data-background-image="images/shallownow.jpg">
+					<h2>
+						<span class="blue">PureComponent</span> e <span class="blue">memo</span><br/>
+						executam uma <span class="blue">comparação</span><br/>
+						<strike>juntos e</strike> <span class="blue">shallow</span> <strike>now</strike><br/>
+						entre <span class="blue">props</span> e <span class="blue">state</span>
+					</h2>
+				</section>
+				<section>
+					<h2>React.lazy</h2>
+					<p>Code-Splitting with Suspense</p>
+					<pre><code class="javascript" data-trim>
+						import React, { lazy, Suspense } from 'react';
+
+						const OtherComponent = lazy(() => import('./OtherComp'));
+
+						function MyComponent() {
+						  return (
+						    &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
+						      &lt;OtherComponent /&gt;
+						    &lt;/Suspense&gt;
+						  );
+						}
+					</code></pre>
+				</section>
+				<section>
+					<h2>Class.contextType</h2>
+					<pre><code class="javascript" data-trim data-noescape>
+						class MyClass extends React.Component {
+						  static contextType = MyContext;
+						}
+					</code></pre>
+					<p>ou</p>
+					<pre><code class="javascript" data-trim data-noescape>
+						class MyClass extends React.Component {
+						}
+
+						MyClass.contextType = MyContext;
+					</code></pre>
+				</section>
+				<section class="full-code">
+					<pre><code class="javascript" data-trim data-noescape>
+						class MyClass extends React.Component {
+						  static contextType = MyContext;
+
+						  componentDidMount() {
+						    let value = this.context;
+						    /* perform a side-effect at mount
+						    using the value of MyContext */
+						  }
+
+						  componentDidUpdate() {
+						    let value = this.context;
+						    /* ... */
+						  }
+
+						  componentWillUnmount() {
+						    let value = this.context;
+						    /* ... */
+						  }
+
+						  render() {
+						    let value = this.context;
+						    /* render something based on the value of MyContext */
+						  }
+						}
+					</code></pre>
+				</section>
+				<section>
+					<h4>static getDerivedStateFromError()</h4>
+					<pre style="margin-top:40px"><code class="javascript" data-trim data-noescape>
+						static getDerivedStateFromError(error)
+					</code></pre>
+				</section>
+				<section class="full-code">
+					<pre><code class="javascript" data-trim data-line-numbers="7-11,14-17">
+						class ErrorBoundary extends React.Component {
+						  constructor(props) {
+						    super(props);
+						    this.state = { hasError: false };
+						  }
+
+						  static getDerivedStateFromError(error) {
+						    /* Update state so the next render
+						       will show the fallback UI. */
+						    return { hasError: true };
+						  }
+
+						  render() {
+						    if (this.state.hasError) {
+						      // You can render any custom fallback UI
+							  return <h1></h1>;
+						    }
+
+						    return this.props.children;
+						  }
+						}
+					</code></pre>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				history: true,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{
+						src: 'plugin/highlight/highlight.js',
+						async: true,
+						callback: function() { hljs.initHighlightingOnLoad(); }
+					}
+				]
+			});
+		</script>
+	</body>
+</html>

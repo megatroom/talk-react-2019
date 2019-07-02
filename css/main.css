@@ -1,0 +1,70 @@
+
+@import url('https://fonts.googleapis.com/css?family=Stylish&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Abel&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap');
+
+body {
+    background-color: #282c34;
+}
+
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal p,
+.reveal li {
+    font-weight: 300;
+    color: #61dafb;
+}
+
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5 {
+    font-family: 'Source Code Pro', monospace;
+    text-transform: none;
+}
+
+.reveal p,
+.reveal li {
+    font-family: 'Abel', sans-serif;
+}
+
+.blue {
+    color: #61dafb;
+}
+
+.purple {
+    color: #c678dd;
+}
+
+.reveal section img,
+img {
+    border: none;
+    box-shadow: none;
+    background: none;
+}
+
+.introduction p,
+.introduction h2 {
+    color: #fff;
+    text-align: left;
+    font-family: 'Stylish', sans-serif;
+}
+
+.shallow-now h2 {
+    color: #fff;
+}
+
+.full-code code {
+    max-height: none !important;
+}
+
+code table {
+    width: 100%;
+}
+
+.highlight-line {
+    /* background-color: rgba(0, 0, 0, 0.2); */
+    background-color: rgb(53, 59, 69);
+}

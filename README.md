@@ -1,1 +1,3 @@
-# palestra-react-2019
+# Palestra React 2019
+
+Novidades do React.
