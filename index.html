@@ -33,11 +33,6 @@
 					<p>by Bruno Nardini</p>
 				</section>
 				<section>
-					<h2>Ops!</h2>
-					<p>Reveal.js + highlight.js turns jsx tag to lowercase</p>
-					<p>But remember: the first letter of components are always in uppercase</p>
-				</section>
-				<section>
 					<h2>React 15.6.2</h2>
 					<p>Switch all packages from <br/> BSD + Patents to <span class="purple">MIT license</span></p>
 				</section>
@@ -80,9 +75,9 @@
 					<pre><code class="javascript" data-trim data-line-numbers="3,5">
 						render() {
 						  return (
-						    <ErrorBoundary>
-						      <h1>I was successfully rendered</h1>
-						    </ErrorBoundary>
+						    &lt;ErrorBoundary&gt;
+						      &lt;h1&gt;I was successfully rendered&lt;/h1&gt;
+						    &lt;/ErrorBoundary&gt;
 						  )
 						}
 					</code></pre>
@@ -92,11 +87,22 @@
 					<pre><code class="javascript" data-trim>
 						render() {
 						  return (
-						    <React.Fragment>
-						      <li>First item</li>,
-						      <li>Second item</li>,
-						      <li>Third item</li>,
-						    </React.Fragment>
+						    &lt;React.Fragment&gt;
+						      &lt;li&gt;First item&lt;/li&gt;,
+						      &lt;li&gt;Second item&lt;/li&gt;,
+						      &lt;li&gt;Third item&lt;/li&gt;,
+						    &lt;/React.Fragment&gt;
+						  );
+						}
+					</code></pre>
+					<pre><code class="javascript" data-trim>
+						render() {
+						  return (
+						    &lt;&gt;
+						      &lt;li&gt;First item&lt;/li&gt;,
+						      &lt;li&gt;Second item&lt;/li&gt;,
+						      &lt;li&gt;Third item&lt;/li&gt;,
+						    &lt;/&gt;
 						  );
 						}
 					</code></pre>
@@ -107,9 +113,9 @@
 						render() {
 						  return [
 						    /* Don't forget the keys :) */
-						    <li key="A">First item</li>,
-						    <li key="B">Second item</li>,
-						    <li key="C">Third item</li>,
+						    &lt;li key=&quot;A&quot;&gt;First item&lt;/li&gt;,
+						    &lt;li key=&quot;B&quot;&gt;Second item&lt;/li&gt;,
+						    &lt;li key=&quot;C&quot;&gt;Third item&lt;/li&gt;,
 						  ];
 						}
 					</code></pre>
@@ -155,16 +161,20 @@
 				</section>
 				<section>
 					<h3>Component Lifecycle Changes</h3>
-					<p>Deprecation warning (will be removed in 17.0):</p>
 					<ul>
-						<li>componentWillMount</li>
-						<li>componentWillReceiveProps</li>
-						<li>componentWillUpdate</li>
-					</ul>
-					<p>New lifecycles:</p>
-					<ul>
-						<li>getDerivedStateFromProps</li>
-						<li>getSnapshotBeforeUpdate</li>
+						<li>Deprecation warning (will be removed in 17.0):
+							<ul>
+								<li>componentWillMount</li>
+								<li>componentWillReceiveProps</li>
+								<li>componentWillUpdate</li>
+							</ul>
+						</li>
+						<li>New lifecycles:
+							<ul>
+								<li>getDerivedStateFromProps</li>
+								<li>getSnapshotBeforeUpdate</li>
+							</ul>
+						</li>
 					</ul>
 				</section>
 				<section>
@@ -310,7 +320,7 @@
 						  render() {
 						    if (this.state.hasError) {
 						      // You can render any custom fallback UI
-							  return <h1></h1>;
+						      return <h1></h1>;
 						    }
 
 						    return this.props.children;
@@ -318,9 +328,9 @@
 						}
 					</code></pre>
 				</section>
-				<section>
+				<section data-background-image="images/capitainhook.jpg">
 					<h2>React v16.8</h2>
-					<p>The One With Hooks</p>
+					<p>The one with the Hook</p>
 				</section>
 				<section>
 					<h2>What Are Hooks?</h2>
