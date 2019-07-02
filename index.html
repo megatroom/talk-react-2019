@@ -33,6 +33,11 @@
 					<p>by Bruno Nardini</p>
 				</section>
 				<section>
+					<h2>Ops!</h2>
+					<p>Reveal.js + highlight.js turns jsx tag to lowercase</p>
+					<p>But remember: the first letter of components are always in uppercase</p>
+				</section>
+				<section>
 					<h2>React 15.6.2</h2>
 					<p>Switch all packages from <br/> BSD + Patents to <span class="purple">MIT license</span></p>
 				</section>
@@ -71,15 +76,26 @@
 						}
 					</code></pre>
 				</section>
+				<section class="full-code">
+					<pre><code class="javascript" data-trim data-line-numbers="3,5">
+						render() {
+						  return (
+						    <ErrorBoundary>
+						      <h1>I was successfully rendered</h1>
+						    </ErrorBoundary>
+						  )
+						}
+					</code></pre>
+				</section>
 				<section>
 					<p>Oh Yeah, Fragments!</p>
 					<pre><code class="javascript" data-trim>
 						render() {
 						  return (
 						    <React.Fragment>
-						      <li key="A">First item</li>,
-						      <li key="B">Second item</li>,
-						      <li key="C">Third item</li>,
+						      <li>First item</li>,
+						      <li>Second item</li>,
+						      <li>Third item</li>,
 						    </React.Fragment>
 						  );
 						}
@@ -89,7 +105,6 @@
 					<p>You can now return an array of elements:</p>
 					<pre><code data-trim>
 						render() {
-						  /* No need to wrap list items in an extra element! */
 						  return [
 						    /* Don't forget the keys :) */
 						    <li key="A">First item</li>,
@@ -128,33 +143,7 @@
 					<img src="images/context.png" alt="Context API">
 				</section>
 				<section>
-					<pre><code class="javascript" data-trim>
-						/* Redux provider */
-						<Provider store={store}>
-						  <App></App>
-						</Provider>
-
-						/* React context provider */
-						<MyContext.Provider value={state}>
-						  <App></App>
-						</MyContext.Provider>
-					</code></pre>
-					<pre><code class="javascript" data-trim>
-						/* Redux consumer with HOC */
-						export default connect(
-						  mapStateToProps,
-						  mapDispatchToProps
-						)(Counter)
-
-						/* React context consumer */
-						<MyContext.Consumer value={state}>
-						  {function(state) {
-						    return (
-						      <h1>{state.title}</h1>
-						    )
-						  }}
-						</MyContext.Consumer>
-					</code></pre>
+					<h2>React Context or Redux?</h2>
 				</section>
 				<section>
 					<h2>React Profiler</h2>
@@ -328,6 +317,365 @@
 						  }
 						}
 					</code></pre>
+				</section>
+				<section>
+					<h2>React v16.8</h2>
+					<p>The One With Hooks</p>
+				</section>
+				<section>
+					<h2>What Are Hooks?</h2>
+					<p>
+						Hooks let you use state and other React features without writing a class.
+						You can also <strong>build your own Hooks</strong> to share reusable stateful logic between components.
+					</p>
+				</section>
+				<section>
+					<ul>
+						<li>
+							Basic Hooks
+							<ul>
+								<li>useState</li>
+								<li>useEffect</li>
+								<li>useContext</li>
+							</ul>
+						</li>
+						<li>
+							Additional Hooks
+							<ul>
+								<li>useReducer</li>
+								<li>useCallback</li>
+								<li>useMemo</li>
+								<li>useRef</li>
+								<li>useImperativeHandle</li>
+								<li>useLayoutEffect</li>
+								<li>useDebugValue</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h2>useState</h2>
+					<p>Returns a stateful value, and a function to update it.</p>
+					<pre><code class="javascript" data-trim>
+						const [state, setState] = useState(initialState);
+					</code></pre>
+				</section>
+				<section class="full-code">
+					<p>Handle state with class:</p>
+					<pre><code class="javascript" data-trim data-line-numbers>
+						import React, { Component } from "react";
+
+						class Example extends Component {
+						  state = { count: 0 };
+
+						  handleCount = () => {
+						    this.setState(prevState => ({
+						      count: prevState.count + 1
+						    }));
+						  }
+
+						  render() {
+						    return (
+						      <div>
+						        <p>You clicked {this.state.count} times</p>
+						        &lt;button onClick={this.handleCount}&gt;
+						          Click me
+						        &lt;/button&gt;
+						      </div>
+						    );
+						  }
+						}
+					</code></pre>
+				</section>
+				<section>
+					<p>Handle state with function:</p>
+					<pre><code class="javascript" data-trim data-line-numbers>
+						import React, { useState } from &#39;react&#39;;
+
+						function Example() {
+						  const [count, setCount] = useState(0);
+
+						  return (
+						    &lt;div&gt;
+						      &lt;p&gt;You clicked {count} times&lt;/p&gt;
+						      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+						        Click me
+						      &lt;/button&gt;
+						    &lt;/div&gt;
+						  );
+						}
+					</code></pre>
+				</section>
+				<section class="full-code">
+					<pre><code class="javascript" data-trim data-line-numbers="6-8,13">
+						import React, { useState } from &#39;react&#39;;
+
+						function Example() {
+						  const [count, setCount] = useState(0);
+
+						  const handleCount = () => {
+						    setCount(count + 1);
+						  }
+
+						  return (
+						    &lt;div&gt;
+						      &lt;p&gt;You clicked {count} times&lt;/p&gt;
+						      &lt;button onClick={handleCount}&gt;
+						        Click me
+						      &lt;/button&gt;
+						    &lt;/div&gt;
+						  );
+						}
+					</code></pre>
+				</section>
+				<section>
+					<h2>useEffect</h2>
+					<p>Accepts a function that contains imperative, possibly effectful code.</p>
+					<pre><code class="javascript" data-trim>
+						useEffect(didUpdate);
+					</code></pre>
+				</section>
+				<section class="full-code">
+					<pre><code class="javascript" data-trim data-line-numbers="1,6-9">
+						import React, { useState, useEffect } from &#39;react&#39;;
+
+						function Example() {
+						  const [count, setCount] = useState(0);
+
+						  useEffect(() => {
+						    // Update the document title using the browser API
+						    document.title = `You clicked ${count} times`;
+						  });
+
+						  return (
+						    &lt;div&gt;
+						      &lt;p&gt;You clicked {count} times&lt;/p&gt;
+						      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+						        Click me
+						      &lt;/button&gt;
+						    &lt;/div&gt;
+						  );
+						}
+					</code></pre>
+				</section>
+				<section class="full-code">
+					<pre><code class="javascript" data-trim data-line-numbers="1,6-9,11-14">
+						import React, { Component } from "react";
+
+						class Example extends Component {
+						  state = { count: 0 };
+
+						  componentDidMount() {
+						    const { count } = this.state;
+						    document.title = `You clicked ${count} times`;
+						  }
+
+						  componentDidUpdate() {
+						    const { count } = this.state;
+						    document.title = `You clicked ${count} times`;
+						  }
+
+						  handleCount = () => {
+						    this.setState(prevState => ({
+						      count: prevState.count + 1
+						    }));
+						  }
+
+						  render() {
+						    // ...
+						  }
+						}
+					</code></pre>
+				</section>
+				<section class="full-code">
+					<pre><code class="javascript" data-trim data-line-numbers="">
+						function FriendStatus({ friend }) {
+						  const [isOnline, setIsOnline] = useState(null);
+
+						  useEffect(() => {
+						    function handleStatusChange(status) {
+						      setIsOnline(status.isOnline);
+						    }
+
+						    ChatAPI.subscribe(friend.id, handleStatusChange);
+
+						    // Specify how to clean up after this effect:
+						    return function cleanup() {
+						      ChatAPI.unsubscribe(friend.id, handleStatusChange);
+						    };
+						  });
+
+						  if (isOnline === null) {
+						    return 'Loading...';
+						  }
+						  return isOnline ? 'Online' : 'Offline';
+						}
+					</code></pre>
+				</section>
+				<section class="full-code">
+					<pre><code class="javascript" data-trim data-line-numbers="4-9,11-16,18-20">
+						class FriendStatus extends React.Component {
+						  state = { isOnline: null };
+
+						  componentDidMount() {
+						    ChatAPI.subscribeToFriendStatus(
+						      this.props.friend.id,
+						      this.handleStatusChange
+						    );
+						  }
+
+						  componentWillUnmount() {
+						    ChatAPI.unsubscribeFromFriendStatus(
+						      this.props.friend.id,
+						      this.handleStatusChange
+						    );
+						  }
+
+						  handleStatusChange = (status) => {
+						    this.setState({ isOnline: status.isOnline });
+						  }
+
+						  render() {
+						    if (this.state.isOnline === null) {
+						      return 'Loading...';
+						    }
+						    return this.state.isOnline ? 'Online' : 'Offline';
+						  }
+						}
+					</code></pre>
+				</section>
+				<section class="full-code">
+					<pre><code class="javascript" data-trim data-line-numbers="15">
+						function FriendStatus({ friend }) {
+						  const [isOnline, setIsOnline] = useState(null);
+
+						  useEffect(() => {
+						    function handleStatusChange(status) {
+						      setIsOnline(status.isOnline);
+						    }
+
+						    ChatAPI.subscribe(friend.id, handleStatusChange);
+
+						    // Specify how to clean up after this effect:
+						    return function cleanup() {
+						      ChatAPI.unsubscribe(friend.id, handleStatusChange);
+						    };
+						  }, [friend.id]);
+
+						  if (isOnline === null) {
+						    return 'Loading...';
+						  }
+						  return isOnline ? 'Online' : 'Offline';
+						}
+					</code></pre>
+				</section>
+				<section class="full-code">
+					<pre><code class="javascript" data-trim data-line-numbers="">
+						function PlanPage() {
+						  const [plans, setPlans] = useState([]);
+
+						  useEffect(() => {
+						    async function fetchPlans() {
+						      const response = await fetch('http://myapi/plans');
+						      const json = await response.json();
+						      setPlans(json);
+						    }
+
+						    fetchPlans();
+						  }, []);
+
+						  return (
+						    &lt;ul&gt;
+						      {plans.map(plan =&gt; (
+						        &lt;li key={plan.id}&gt;{plan.name}&lt;/li&gt;
+						      ))}
+						    &lt;/ul&gt;
+						  );
+						}
+					</code></pre>
+				</section>
+				<section>
+					<h2>useContext</h2>
+					<p>Accepts a context object and returns the current context value for that context.</p>
+					<pre><code class="javascript" data-trim>
+						const value = useContext(MyContext);
+					</code></pre>
+				</section>
+				<section class="full-code">
+					<pre><code data-trim>
+						class UserAvatar extends React.Component {
+						  return (
+						    &lt;AuthContext.Consumer&gt;
+						      {({ user }) =&gt; (
+						        &lt;ThemeContext.Consumer&gt;
+						          {theme =&gt; &lt;Avatar src={user.img} theme={theme} /&gt;}
+						        &lt;/ThemeContext.Consumer&gt;
+						      )}
+						    &lt;/AuthContext.Consumer&gt;
+						  );
+						}
+					</code></pre>
+					<pre><code class="javascript" data-trim>
+						function UserAvatar() {
+						  const { user } = useContext(AuthContext);
+						  const theme = useContext(ThemeContext);
+
+						  return (
+						    &lt;Avatar src={user.img} theme={theme} /&gt;
+						  );
+						}
+					</code></pre>
+				</section>
+				<section>
+					<h2>useReducer</h2>
+					<p>An alternative to useState.</p>
+					<pre><code class="javascript" data-trim>
+						const [state, dispatch] =
+						  useReducer(reducer, initialArg, init);
+					</code></pre>
+				</section>
+				<section class="full-code">
+					<pre><code class="javascript" data-trim>
+						const initialState = { count: 0 };
+
+						function reducer(state, action) {
+						  switch (action.type) {
+						    case 'increment':
+						      return { count: state.count + 1 };
+						    case 'decrement':
+						      return { count: state.count - 1 };
+						    default:
+						      return state;
+						  }
+						}
+
+						function Counter() {
+						  const [state, dispatch] =
+						    useReducer(reducer, initialState);
+						  return (
+						    &lt;&gt;
+						      Count: {state.count}
+						      &lt;button onClick={() =&gt; dispatch({type: &#39;increment&#39;})}&gt;
+						        + increment
+						      &lt;/button&gt;
+						      &lt;button onClick={() =&gt; dispatch({type: &#39;decrement&#39;})}&gt;
+						        - decrement
+						      &lt;/button&gt;
+						    &lt;/&gt;
+						  );
+						}
+					</code></pre>
+				</section>
+				<section>
+					<h2>For more Hooks...</h2>
+					<p>Read the docs: </p>
+					<p>https://reactjs.org/docs/hooks-reference.html</p>
+				</section>
+				<section>
+					<h2>Thanks!</h2>
+					<p>
+						<a href="http://www.brunonardini.com.br/" target="_blank">www.brunonardini.com.br</a>
+					</p>
 				</section>
 			</div>
 		</div>

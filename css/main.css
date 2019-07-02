@@ -23,6 +23,7 @@ body {
 .reveal h5 {
     font-family: 'Source Code Pro', monospace;
     text-transform: none;
+    color: #c678dd;
 }
 
 .reveal p,
@@ -30,8 +31,10 @@ body {
     font-family: 'Abel', sans-serif;
 }
 
+a,
+a:active,
 .blue {
-    color: #61dafb;
+    color: #61dafb !important;
 }
 
 .purple {
